@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: github-token
+    namespace: default
+stringData:
+    github-token: ENC[AES256_GCM,data:BP1zvYvTwazFNl5eg9HhFnmEph9eRJtbt6T5UQ5SHALAuOK90pNavg==,iv:bEIVLLfCz3Ke1+ULoBL3Yi2hlOe0i0o59IQsNM3rx3k=,tag:MCwraNIs99VD0qT2I9fPWw==,type:str]
+type: Opaque
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1ydxmuen2jv3a9ptg3sp8wcpzuz5chcvaaky2dwsfwmkhsl8leqdqvwxf7m
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2TjN6K016YmxNNXhHeEh6
+            NzNET2tqYmphalFYVGw0U0pKaW5LOFRoMlRzCjFRTUZSdlAvbmNTR214YTBaRVpz
+            Z1dNV2NHOWF1UGtIdUZTRWZZUXhySEkKLS0tIHh0ZVdlanM4WU11VStQRWJ5Ym9s
+            Mko1UlRaNU1CeVNQM2Zyb0VDclB1ZmcKIvA6dh6NL7PaFEU7REyb6g3l3xSvdxlf
+            YegUt15Ho8zELJHaECLLsAgQRAv5avs7FIwAhXGKMIX49DF7LLrfAA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-08-07T02:46:12Z"
+    mac: ENC[AES256_GCM,data:26QTrfAizIKR7ytKE49EZ/M/Ywj836HvOX7LBYo31yV3kjnNRKX2vRiTESwaZSYcNCaa/g+lq7h5Fyl6kx7sHnBaWV9b2A+AUQtpbBEYi9QZAzWGhDhuD6ga2KIdyUCcC0URD5dhrspQ5g1Nv50aJf4EU0IUgun9SKd21S37tkM=,iv:BlGUHBUyl0xG8pBTnLlGHWDj+XF6J9gYKLWetPvmNX0=,tag:95wXieMntoj5cQOrPFSGkQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

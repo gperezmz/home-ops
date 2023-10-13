@@ -1,0 +1,29 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cloudflare-ddns
+  namespace: networking
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      ttlSecondsAfterFinished: 300
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: cloudflare-ddns
+              image: kissgyorgy/cloudflare-dyndns:v4.1
+              env:
+                - name: CLOUDFLARE_DOMAINS
+                  value: "${SECRET_DOMAIN} ${SECRET_DOMAIN_WEBSITE_01}"
+              envFrom:
+                - secretRef:
+                    name: cloudflare-ddns
+              args:
+                - "--proxied"

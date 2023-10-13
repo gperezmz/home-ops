@@ -1,0 +1,12 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - cert-manager.yaml
+  - flux-system.yaml
+  - kyverno.yaml
+  - media.yaml
+  - monitoring.yaml
+  - networking.yaml
+  # - traefik.yaml
+  - websites.yaml

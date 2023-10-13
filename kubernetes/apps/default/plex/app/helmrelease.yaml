@@ -1,0 +1,112 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plex
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex-beta
+              tag: 1.32.7.7571-13cdc68dc
+            resources:
+              requests:
+                cpu: 100m
+                memory: 2000Mi
+              limits:
+                memory: 10000Mi
+
+            env:
+              TZ: "${TIMEZONE}"
+              ADVERTISE_IP: "https://${SVC_PLEX_ADDR}:32400/,https://plex.${SECRET_DOMAIN}:443/"
+              ALLOWED_NETWORKS: 10.0.0.0/8
+              PLEX_PREFERENCE_1: FriendlyName=plex-k3s
+              PLEX_PREFERENCE_2: LanNetworkBandwith=10.0.0.0/8
+
+    service:
+      main:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        externalIPs:
+          - "${SVC_PLEX_ADDR}"
+        ports:
+          http:
+            port: 32400
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            location = / {
+              if ($http_x_plex_device = ""){
+                return 301 $scheme://$host/web/index.html;
+              }
+            }
+          hajimari.io/icon: mdi:plex
+        className: "nginx"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN/./-}-tls"
+
+    persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /data/plex
+        globalMounts:
+          - path: /config
+      transcode:
+        type: emptyDir
+        globalMounts:
+          - path: /transcode
+      media:
+        type: hostPath
+        hostPath: /storage/media
+        globalMounts:
+          - path: /data

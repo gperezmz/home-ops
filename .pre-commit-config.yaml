@@ -1,0 +1,35 @@
+---
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+fail_fast: false
+repos:
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.27.1
+    hooks:
+      - id: yamllint
+        args:
+          - --config-file
+          - .yamllint.yaml
+          - --strict
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: detect-private-key
+  - repo: https://github.com/sirosen/texthooks
+    rev: 0.3.1
+    hooks:
+      - id: fix-smartquotes
+  - repo: https://github.com/k8s-at-home/sops-pre-commit
+    rev: v2.1.1
+    hooks:
+      - id: forbid-secrets
+  - repo: https://github.com/zricethezav/gitleaks
+    rev: v8.9.0
+    hooks:
+      - id: gitleaks

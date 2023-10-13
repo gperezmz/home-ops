@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: guacamole-config
+    namespace: default
+stringData:
+    MYSQL_HOSTNAME: ENC[AES256_GCM,data:DnswZnfBM6DckUlqxjRjH40cA+7S3pXqfvlGMEM/5mHf,iv:7xKYOqIdCpeCllVebqYIeW2ib7NpIAJyBRvufO2uFY0=,tag:MlvlaN/3Se9mjRa8Wcso0Q==,type:str]
+    MYSQL_DATABASE: ENC[AES256_GCM,data:jlumRAPvKYOh,iv:ZOoV51BqZ4Ah2lXn8OZgmpR3ePXNYyGHP3dyyuDfWK4=,tag:45svLqCuoBIJ+kzlf4s4xA==,type:str]
+    MYSQL_USER: ENC[AES256_GCM,data:0yf6nUDVfTsX,iv:ePOXYQHto9wO0+jsEnAWM1TjadJV2Ox4a+zshgLpe8I=,tag:VK1bY6xxt7qaJmGQ9CGCJg==,type:str]
+    MYSQL_PASSWORD: ENC[AES256_GCM,data:K44wl91yZKuzEzQW+u0=,iv:O0r45x/Nl01krEoy3ZA10tVt1p0jAem+RbNsfqrAu4g=,tag:FBRysOWSPrWOtMBHLStsOA==,type:str]
+type: Opaque
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1ydxmuen2jv3a9ptg3sp8wcpzuz5chcvaaky2dwsfwmkhsl8leqdqvwxf7m
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBHeWNyS1JCaGhXNTBCaUxi
+            a0doQmxTcWFTdkh3ZWYwTno3bEtTMTJNOVg0CktPd1gwM1FCcitTWldFam9oK1U4
+            cStrc3dLSENuelU1dDBGemlPY3JoV2MKLS0tIFlhb3dLYndKSCt3d3JhdGNZbVVG
+            ZjRHUU9yT09nMy8rN1BKZjNtcmQ1YTQK4IjpRatlVdJV7eqtj1FTUwkSum3mgnSE
+            lO9TV65Prd0v7ER85QealwYbN6ZVeZDUrZIpdZOmu9kpTyDtZJTJtg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-05-27T16:51:47Z"
+    mac: ENC[AES256_GCM,data:B1ZOc1erANsA4l/Kor6Y225WJW+MIiE7InL4uTJ2+9uvZaqBtQAvcy2GZQTdU4yBSoiVqmUsrHBO55hpA1WFqlU4R1O7MuynA8zdR/FS/SxmpvXa9j/vliw6sitrcTxeBknDIEvXLC5APNgVCmcHFsQcik7YM0O2SFEF4BW6CKQ=,iv:I/Td1ozasHIf3dmA6wZhA/STXXMN1MtRLCKi29nawzw=,tag:J94Jv2wq9ySGnR79W7jeRA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

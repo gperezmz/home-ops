@@ -1,0 +1,29 @@
+#ENC[AES256_GCM,data:cISpj35HH849LN/WrQhUvH8HdBf241MHDifxK8mGPJk8HQ==,iv:0DM2wV3yPC++a9SZsNxPnYfWbKpKr9LV7p/o6P43NtQ=,tag:O2N8fLhh9a0+SZxoHpm3Ew==,type:comment]
+timezone: ENC[AES256_GCM,data:WkS9tyo2mnDBuFGRmQ==,iv:gydS3s+SIVF8lT7T6wGiL21frPy2YBv18Nfwx9UNTDk=,tag:HeoU5/ghKWOSpPwsBRyHDw==,type:str]
+#ENC[AES256_GCM,data:e5Zi6/+UE44/rUDWYrrCcBMAj1fMnhVPujiSFXHdXtK+aw3CW2sMV0WEPy/SyC0MI84l+GtG,iv:qf06owdfEk8jVf3gdxfHwHNKwswEC71DBpNfQbsuklg=,tag:zEN1C5ciZQVK+levJNL1mg==,type:comment]
+public_ssh_keys:
+    - ENC[AES256_GCM,data:scGL5njLqy4fVyUDKV6HdTbl/FPlI7cCNFkE5qi4KlK1+rHMQEn1NWnlmX5Rf6vv1Ig+CCWb4I4wnP6hP4y7MmqohtvFAKMBeJFJ234fCDQ2Ly314WDS3LRH5QFqq6Xx322I,iv:tx7dnW8COXijDzoV2UOP8vUezgY3EK/5ADF3aJD2ZYQ=,tag:rJjUIqLGfYP7A+9QdWhrtg==,type:str]
+domains:
+    - ENC[AES256_GCM,data:vQx3temB9f1CgPc=,iv:y29cgJIIMRd1mw+cvT9raU+ARhkp0o/fqtAXkudD490=,tag:ItVYxm171sBAHg4ZTdHz3g==,type:str]
+    - ENC[AES256_GCM,data:oXfc04fbjg==,iv:aUbYiGkEmfnyuQwjE2K014xjTz8is7Q1TyPPVQGYoiQ=,tag:VZLQQWfPeXe2SPjoQpnubw==,type:str]
+    - ENC[AES256_GCM,data:k1iSELbl5w==,iv:g7yV99wUcySEFqQ6IGuGFAW5Y7BliEBfK8kr9+WixXM=,tag:ohjCb1xAmdiVJUT9Su03zw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1ydxmuen2jv3a9ptg3sp8wcpzuz5chcvaaky2dwsfwmkhsl8leqdqvwxf7m
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvQ3E2TWFwQlNVK1UrbkhU
+            UDBEdlZhT0tUazBYTlRuOEoxeE9sQXNBZHpZCkdYb2VoamxQU3hUOFlRdExMYTNk
+            K0Rpenk5R2dHb2xLRGR4TkJEd05YUEUKLS0tIDM5QkREa2p6QmpiN0U5QVpDVC9B
+            RVl6cHNnNzFyeTNmc1FkU2VJdkpDSkEKIfQt1SoA8yU4XRwmSqT4dG2sAM1V9n+s
+            E9mgkTzE1yluqspUSkLndcu7wZEwrYlyq4RcVQTAlnV6v6z9XGxu8A==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-04-16T23:07:20Z"
+    mac: ENC[AES256_GCM,data:Opy6dHYNfShEe1UZNtgx6kXnSgXbdPJEr4w90JeLZPnyybj1N0dtud+E6e0cyPbMAjcT1N72o43DdtBE52MZDcl10JbWd5+iIPiSeuP+17BoWZ6i4zp+MV8CzuY1ZbHiO7HvxROFhtCYYHBWaTUR6sPRpwMp7ZQxSDK0415Pdmg=,iv:6/IL2vYZYjfgMftaeYAaweRNKJlmdiaVpXPszBm4zDo=,tag:XZSRqjkEwkF84G+WulFuiw==,type:str]
+    pgp: []
+    unencrypted_regex: ^(kind)$
+    version: 3.7.3

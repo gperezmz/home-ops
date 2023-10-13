@@ -1,0 +1,104 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: guacamole
+  namespace: default
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: /charts/kah-common/
+      version: 2.x
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m0s
+  values:
+    nameOverride: guacamole
+
+    image:
+      repository: guacamole/guacamole
+      tag: 1.5.0
+
+    env:
+      GUACD_HOSTNAME: localhost
+      GUACAMOLE_HOME: /config
+      TZ: "${TIMEZONE}"
+
+    envFrom:
+      - secretRef:
+          name: guacamole-config
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          auth.home.arpa/enabled: "true" # ,default-add-guacamole@kubernetescrd
+        hosts:
+          - host: "guacamole.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - secretName: "${SECRET_DOMAIN/./-}-tls"
+
+    persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /data/guacamole
+        mountPath: /config
+      initdb:
+        enabled: true
+        type: emptyDir
+        mountPath: "-"
+
+    initContainers:
+      00-create-init-db:
+        image: guacamole/guacamole:1.5.0
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: guacamole-config
+        volumeMounts:
+          - name: initdb
+            mountPath: /data
+        command:
+          - /bin/sh
+        args:
+          - -c
+          - |
+            /opt/guacamole/bin/initdb.sh --mysql > /data/initdb.sql
+      01-load-db:
+        image: mariadb:10.11
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: guacamole-config
+        volumeMounts:
+          - name: initdb
+            mountPath: /data
+        command:
+          - /bin/sh
+        args:
+          - -c
+          - |
+            /usr/bin/mysql -h $MYSQL_HOSTNAME -u $MYSQL_USER --password=$MYSQL_PASSWORD $MYSQL_DATABASE < /data/initdb.sql  || true
+
+    additionalContainers:
+      guacd:
+        image: guacamole/guacd:1.5.0
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: guacd
+            containerPort: 4822

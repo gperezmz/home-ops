@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-vm
+  namespace: default
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  loadBalancerIP: "${SVC_WINDOWS_VM_ADDR}"
+  ports:
+    - name: rdp
+      port: 3389
+      protocol: TCP
+      targetPort: 3389
+  selector:
+    kubevirt.io/domain: dev-vm

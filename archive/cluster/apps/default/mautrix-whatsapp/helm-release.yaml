@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mautrix-whatsapp
+  namespace: default
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: /charts/kah-common/
+      version: 2.x
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m0s
+  values:
+    nameOverride: mautrix-whatsapp
+
+    image:
+      repository: dock.mau.dev/mautrix/whatsapp
+      tag: latest
+      pullPolicy: Always
+
+    service:
+      main:
+        ports:
+          http:
+            port: 29318
+
+    persistence:
+      data:
+        enabled: true
+        type: hostPath
+        hostPath: /data/mautrix-whatsapp
+        mountPath: /data

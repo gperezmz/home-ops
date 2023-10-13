@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: samba-users
+    namespace: media
+stringData:
+    USER: ENC[AES256_GCM,data:xU111EHXtKMFvP1p85h+ynk=,iv:IPev5eGbjGc8fa7OIKQwZ5BMqFpENYrGQyIQPlI6VWc=,tag:avXCUXwTNt5t7uMeCoC49Q==,type:str]
+    USER2: ENC[AES256_GCM,data:HYv/mbgyNRlXGOzpewLNR0YzqwA=,iv:iYGI/FkdIEiWpZXKAXGTrxQCf103sa+VBuEHYExmG+Y=,tag:icQ4PGTgIx0+WePH78DhxA==,type:str]
+type: Opaque
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1ydxmuen2jv3a9ptg3sp8wcpzuz5chcvaaky2dwsfwmkhsl8leqdqvwxf7m
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBMa0x0SncxekNSbFNkUkJa
+            R2FOU2R4dG5tM2hhNkZMckRLVFVMMU1FbDJvCmh2K1VGNjlxSElFOGpqTlI0dmRJ
+            Y0I5MmZlV2ZyY0FpbGRBRXFRSktJc3cKLS0tIGxCcDB6L0lvYUdTU09yVE5YSWp6
+            Wk1sYm8zMXZYd3Y5ZGoxS1kybm1Ca0kKH9Dgl1MzzCUqxStPotOBTogIEhfKySem
+            39SPb1MRtufaVYEIbwWhU1mBcLrZq2i/FWBlzpTeqR/+hJ5zqzFfAA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-05-27T16:51:47Z"
+    mac: ENC[AES256_GCM,data:mH0LoLjRQRq3eGrGtRr9dtJmALdsmRebOGvoT0+Orow+v5i63E2D4S688xsER6CrSqsYwjJq4QeiqY1gROgTAwc1bDFJ8DOPDUcJrhDalRx7Z/GHuUSWbhlI7kiW+tRIyUFvYzlRfhMYybcU7bzRiZBJj7E1WKXANxL74/PS5FE=,iv:jnQ5LG34xBfEfxC4+AFgnrct8LFv7hNDPXa3moTVddU=,tag:SdGc5uqXAE3kP3qdcpjGaw==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

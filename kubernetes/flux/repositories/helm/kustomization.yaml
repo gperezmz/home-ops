@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - actions-runner-controller.yaml
+  - ananace.yaml
+  - angelnu.yaml
+  - bitnami.yaml
+  - bjw-s.yaml
+  - dex.yaml
+  - emberstack.yaml
+  - external-dns.yaml
+  - external-secrets.yaml
+  - gissilabs.yaml
+  - grafana.yaml
+  - hajimari.yaml
+  - ingress-nginx.yaml
+  - jetstack.yaml
+  - k8s-at-home.yaml
+  - kyverno.yaml
+  - metallb.yaml
+  - prometheus-community.yaml
+  - stakater.yaml
+  - traefik.yaml
+  - metrics-server.yaml
+  - weave-gitops.yaml

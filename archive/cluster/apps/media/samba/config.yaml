@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: samba-config
+  namespace: media
+data:
+  NMBD: "true"
+  PERMISSIONS: "true"
+  RECYCLE: "true"
+  SHARE: Public;/shares/public;yes;no;no;all
+  SHARE2: Kitty;/shares/kitty;yes;no;no;kitty
+  SHARE3: Guillermo;/shares/gperezmz;yes;no;no;gperezmz
+  SHARE4: Documents;/documents;yes;no;no;all

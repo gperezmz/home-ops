@@ -1,0 +1,9 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        k8s-0:
+          ansible_host: 10.1.1.31
+      vars:
+        ansible_user: ubuntu

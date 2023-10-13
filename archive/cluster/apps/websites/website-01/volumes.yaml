@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "${SECRET_DOMAIN_WEBSITE_01/./-}-data"
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/data/websites/${SECRET_DOMAIN_WEBSITE_01/./-}"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "${SECRET_DOMAIN_WEBSITE_01/./-}-data"
+  namespace: websites
+spec:
+  resources:
+    requests:
+      storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: local-storage
+  volumeName: "${SECRET_DOMAIN_WEBSITE_01/./-}-data"

@@ -1,0 +1,98 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: "${SECRET_DOMAIN_WEBSITE_01/./-}"
+  namespace: websites
+spec:
+  dependsOn:
+    - namespace: default
+      name: mariadb
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: wordpress
+      version: 15.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+  interval: 5m0s
+  install:
+    remediation:
+      retries: 3
+  values:
+    ingress:
+      enabled: true
+      ingressClassName: "nginx"
+      hostname: "${SECRET_DOMAIN_WEBSITE_01}"
+      extraTls:
+        - secretName: "${SECRET_DOMAIN_WEBSITE_01/./-}-tls"
+
+    wordpressSkipInstall: true
+    wordpressScheme: https
+    wordpressAutoUpdateLevel: none
+    wordpressPlugins: none
+
+    wordpressUsername: "${SECRET_WEBSITE_01_WPUSERNAME}"
+    existingSecret: "${SECRET_DOMAIN_WEBSITE_01/./-}-passwords"
+    wordpressEmail: "${SECRET_WEBSITE_01_WPEMAIL}"
+    wordpressFirstName: Website
+    wordpressLastName: Administrator
+    wordpressBlogName: "${SECRET_WEBSITE_01_WPNAME}"
+
+    smtpHost: "${SECRET_WEBSITE_01_SMTP_HOST}"
+    smtpPort: "${SECRET_WEBSITE_01_SMTP_PORT}"
+    smtpProtocol: "${SECRET_WEBSITE_01_SMTP_PROTOCOL}"
+    smtpUser: "${SECRET_WEBSITE_01_SMTP_USER}"
+    smtpExistingSecret: "${SECRET_DOMAIN_WEBSITE_01/./-}-passwords"
+
+    livenessProbe:
+      httpGet:
+        httpHeaders:
+          - name: X-Forwarded-Proto
+            value: https
+
+    readinessProbe:
+      httpGet:
+        httpHeaders:
+          - name: X-Forwarded-Proto
+            value: https
+
+    allowOverrideNone: true
+    htaccessPersistenceEnabled: false
+
+    hostAliases:
+      - ip: "${SVC_NGINX_ADDR}"
+        hostnames:
+          - "${SECRET_DOMAIN}"
+          - "${SECRET_DOMAIN_WEBSITE_01}"
+
+    service:
+      type: ClusterIP
+
+    persistence:
+      existingClaim: "${SECRET_DOMAIN_WEBSITE_01/./-}-data"
+
+    volumePermissions:
+      enabled: true
+
+    extraVolumeMounts:
+      - name: apache-config
+        subPath: real_ip.conf
+        mountPath: /opt/bitnami/apache/conf/vhosts/real_ip.conf
+
+    extraVolumes:
+      - name: apache-config
+        configMap:
+          name: "${SECRET_DOMAIN_WEBSITE_01/./-}-apache-config"
+
+    mariadb:
+      enabled: false
+
+    externalDatabase:
+      host: mariadb.default.svc.cluster.local
+      database: "${SECRET_WEBSITE_01_DATABASE_NAME}"
+      user: "${SECRET_WEBSITE_01_DATABASE_USER}"
+      existingSecret: "${SECRET_DOMAIN_WEBSITE_01/./-}-passwords"

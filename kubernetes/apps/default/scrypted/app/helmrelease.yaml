@@ -71,7 +71,12 @@ spec:
         mountPath: /.npm
         type: emptyDir
     podAnnotations:
-      k8s.v1.cni.cncf.io/networks: macvlan-static-iot-scrypted
+      k8s.v1.cni.cncf.io/networks: |
+        [{
+          "name":"multus-iot",
+          "namespace": "network",
+          "ips": ["10.1.3.152/24"]
+        }]
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

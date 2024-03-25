@@ -1,12 +1,11 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: multus
-  namespace: networking
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: multus
@@ -15,17 +14,7 @@ spec:
         kind: HelmRepository
         name: angelnu
         namespace: flux-system
-  maxHistory: 3
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
+      interval: 30m
   values:
     image:
       repository: ghcr.io/k8snetworkplumbingwg/multus-cni
@@ -40,4 +29,12 @@ spec:
         config: /etc/cni/net.d
         bin: /opt/cni/bin
 
-      version: "0.3.1"
+    resources:
+      requests:
+        cpu: 5m
+        memory: 96Mi
+      limits:
+        memory: 96Mi
+
+    hostPaths:
+      netns: /var/run/netns

@@ -33,7 +33,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/radarr-develop
-      tag: 5.4.4.8688
+      tag: 5.8.0.8897
     env:
       TZ: "${TIMEZONE}"
       RADARR__INSTANCE_NAME: Radarr
